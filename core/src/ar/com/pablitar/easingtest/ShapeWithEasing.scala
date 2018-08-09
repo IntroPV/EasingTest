@@ -1,5 +1,4 @@
 package ar.com.pablitar.easingtest
-
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.Gdx
@@ -7,7 +6,7 @@ import com.badlogic.gdx.Gdx
 class ShapeWithEasing(var position: Vector2 = new Vector2) {
   
   val movementTime = 1.0f
-  val interpolator = Interpolation.pow2
+  val interpolator = Interpolation.swingOut
   
   var target = Option.empty[Vector2]
   var startPosition = position
@@ -17,11 +16,12 @@ class ShapeWithEasing(var position: Vector2 = new Vector2) {
   def update(delta: Float) = {
     target.foreach { aMovementTarget =>
       val interpolationRatio = interpolator.apply(movementElapsed / movementTime)
-      val scaleRatio = (interpolationRatio - 0.5f) * 2
+      val scaleRatio = (interpolationRatio - 0.3f) * 1.4f
       
-      scale = (scaleRatio * scaleRatio)
+      scale = (scaleRatio * scaleRatio) + 0.5f
       
-      position = startPosition.cpy().lerp(aMovementTarget, interpolationRatio)
+      position = startPosition.cpy().
+        lerp(aMovementTarget, interpolationRatio)
       
       movementElapsed += delta
       
