@@ -16,9 +16,8 @@ class ShapeWithEasing(var position: Vector2 = new Vector2) {
   def update(delta: Float) = {
     target.foreach { aMovementTarget =>
       val interpolationRatio = interpolator.apply(movementElapsed / movementTime)
-      val scaleRatio = (interpolationRatio - 0.3f) * 1.4f
-      
-      scale = (scaleRatio * scaleRatio) + 0.5f
+
+      scale = 2 * interpolationRatio * interpolationRatio - 2 * interpolationRatio + 1
       
       position = startPosition.cpy().
         lerp(aMovementTarget, interpolationRatio)
